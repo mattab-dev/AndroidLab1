@@ -1,3 +1,4 @@
 # Projektowanie i programowanie aplikacji na platformę Android - Laboratorium 1
+**Autor: Remigiusz Samborski**
 
-Zadanie do laboratorium 1.
+Zadanie rozgrzewkowe do laboratorium 1.
