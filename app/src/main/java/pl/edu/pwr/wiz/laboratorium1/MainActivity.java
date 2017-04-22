@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Komentarz
+        // Komentarz - uzupelniony
         // @TODO wyswietlac i ukrywac obrazek
     }
 
