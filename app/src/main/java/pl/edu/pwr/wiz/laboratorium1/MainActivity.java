@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +35,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // @TODO wyświetlać Snackbar
-
+                Snackbar.make(findViewById(R.id.coordinator), "Example text about application", Snackbar.LENGTH_SHORT).show();
             }
         });
 
         // @TODO wyswietlac i ukrywac obrazek
+        Button btn_img = findViewById(R.id.button1);
+        btn_img.setOnClickListener(new View.OnClickListener() {
+            ImageView image = findViewById(R.id.image1);
+            boolean isVisible = true;
+            @Override
+            public void onClick(View v) {
+                Log.i("app", "button clicked!");
+                if(isVisible) {
+                    image.setVisibility(View.INVISIBLE);
+                    isVisible = false;
+                } else {
+                    image.setVisibility(View.VISIBLE);
+                    isVisible = true;
+                }
+            }
+        });
     }
 
     @Override
@@ -69,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // @TODO otworz aktywnosc z ustawieniami i przeslij do niej aktualne kolory - hint uzyj funkcji startActivityForResult
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra("textColor", textColor);
+            intent.putExtra("backColor", backgroundColor);
+            startActivityForResult(intent, SettingsActivity.CHANGE_SETTINGS);
 
             return true;
         }
@@ -83,12 +105,15 @@ public class MainActivity extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK && data != null) {
                 // @TODO Pobierz dane powrotne z Intentu 'data'
-
+                int textColor = data.getExtras().getInt("textColor");
+                int backgroundColor = data.getExtras().getInt("backColor");
                 // @TODO Zmien kolor tekstu w TextView o id welcome
-
+                TextView welcome = findViewById(R.id.welcome);
+                welcome.setTextColor(textColor);
+                welcome.setBackgroundColor(backgroundColor);
                 // Wyswietlamy info, ze dane zostaly zapisane
                 String txt = (String) data.getStringExtra("txt");
-                Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), txt, LENGTH_SHORT).show();
             }
         }
     }

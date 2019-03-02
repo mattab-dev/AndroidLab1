@@ -18,6 +18,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         // @TODO Pobierz aktualne kolory */
+        Bundle data = getIntent().getExtras();
+        textColor = data.getInt("textColor");
+        backgroundColor = data.getInt("backColor");
 
     }
 
@@ -25,7 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
         Intent result = new Intent();
 
         // @TODO Przekaż dane powrotne z nowymi kolorami
-
+        result.putExtra("textColor", textColor);
+        result.putExtra("backColor", backgroundColor);
         result.putExtra("txt", "Ustawienia zapisane");
         setResult(Activity.RESULT_OK, result);
         finish();
@@ -50,5 +54,18 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onBackgroundColor(View view) {
         // @TODO Wstaw okno dialogowe do wyboru koloru tla analogicznie do tego uzytego przy wyborze koloru tekstu
+        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, backgroundColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+                // cancel selected
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                // new color selected
+                backgroundColor = color;
+            }
+        });
+        dialog.show();
     }
 }
